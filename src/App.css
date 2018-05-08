@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  overflow: auto;
+  height: 674px;
 }
 
 .App-logo {
@@ -25,4 +27,37 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+.header {
+  margin: 5px;
+  padding: 5px;
+  border-bottom: 1px solid black;
+}
+.container {
+  text-align: left;
+}
+.show {
+  display: block;
+}
+.hide {
+  display: none;
+}
+.detail {
+  cursor: pointer;
+  color: gray;
+  font-style: italic;
+}
+#sortMsg {
+  font-size: 12px;
+  color: gray;
+  background-color: yellow;
+  width: 32%;
+  margin: 5px auto 5px auto;
+}
+#sortMsg span {
+  float: left;
+  font-weight: bold;
+}
+#loadingContainer {
+  margin-left: 30px;
 }
