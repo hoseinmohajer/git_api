@@ -1,21 +1,57 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import MyList from './myList';
 
+import { withStyles } from 'material-ui/styles';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
+import IconButton from 'material-ui/IconButton';
+import TextField from 'material-ui/TextField';
+import MenuIcon from '@material-ui/icons/Menu';
+
+const styles = theme => ({
+  root: {
+  	overflow: 'auto',
+  	height: 674,
+		flexGrow: 1,
+	},
+	flex: {
+		flex: 1,
+	},
+	menuButton: {
+		marginLeft: -12,
+		marginRight: 20,
+	},
+
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
+  },
+  menu: {
+    width: 200,
+  },
+});
+
 let url = (id = 0) => (`https://api.github.com/users?since=${id}`);
 class App extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			data: [],
 			origData: [],
-			sortMsg: '',
+			sortMsg: 'Sort',
 			loadingState: false,
 			lastItemId: null
 		}
 		this.sort = this.sort.bind(this);
 	}
+
 	fetchDate(id) {
 		let thiz = this;
 		fetch( url(id) ).then(
@@ -45,8 +81,8 @@ class App extends Component {
 		this.setState({ loadingState: true });
 		this.fetchDate(this.state.lastItemId);
 	}
-	sort() {
-		const value = this.refs.findInput.value;
+	sort(event) {
+		const value = event.target.value;
 		if (value === '' || value === null) {
 			this.setState({
 				data: this.state.origData,
@@ -63,25 +99,35 @@ class App extends Component {
 		}
 	}
 	render() {
+		// deconstruct
+		const {classes} = this.props;
 		return (
-			<div className="App" ref="iScroll">
-				<header className="App-header">
-					<img src={logo} className="App-logo" alt="logo" />
-					<h1 className="App-title">Git API</h1>
-				</header>
-				<div className="header">
-					<input ref="findInput" type="text" placeholder="sort by..." />
-					<button onClick={this.sort.bind(this)} >Sort!</button>
-					<div id="sortMsg"><span>Sort Resault:</span>&nbsp;{this.state.sortMsg}</div>
-				</div>
-				<br/>
-				<div className="container">
+			<div className={classes.root} ref="iScroll">
+				<AppBar position="static">
+					<Toolbar>
+						<IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+							<MenuIcon />
+						</IconButton>
+						<Typography variant="title" color="inherit" className={classes.flex}>
+							Git API
+						</Typography>
+						<form className={classes.container} noValidate autoComplete="off">
+							<TextField
+								id="sort"
+								label={this.state.sortMsg}
+								className={classes.textField}
+								onChange={this.sort}
+								margin="normal"
+							/>
+						</form>  
+					</Toolbar>
+				</AppBar>
 					<MyList data={this.state.data} />
 					{ (this.state.loadingState) ? <div id="loadingContainer" ref="loadingContainer">Loading...</div> : '' }
-				</div>
 			</div>
 		);
 	}
 }
 
-export default App;
+const AppWithStyles = withStyles(styles)(App);
+export default AppWithStyles;

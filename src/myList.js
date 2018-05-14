@@ -1,39 +1,65 @@
 import React from 'react';
+import { withStyles } from 'material-ui/styles';
+import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+import Typography from 'material-ui/Typography';
+import {Link, withRouter} from 'react-router-dom';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
 
+const styles = theme => ({
+	root: {
+		width: '100%',
+		flexGrow: 1,
+		display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
+	},
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  }
+});
 class MyList extends React.Component {
 	detail() {
-		let namesArray = [];
-		this.props.data.map((item, index) => {
-			let detailArray = [];
-			for(let key in item) {
-				detailArray.push(<li key={key}><b>{key}: </b>{item[key]}</li>);
-			}
-			return namesArray.push(
-				<li key={index}>
-					{item.login}&nbsp;
-					<a className="detail" onClick={this.toggleDetail.bind(this, item.login)}>more...</a>
-					<ol className="hide" key={item.login} ref={item.login}>
-						{detailArray}
-					</ol>	
-				</li>
-			);
-		});
-		return namesArray;
+		const {classes} = this.props;
+		return(
+			<div className={classes.root}>
+	      <GridList cellHeight={300} className={classes.gridList} cols={4}>
+					{
+						this.props.data.map((item, index) => {
+							 return (
+								<GridListTile key={item.id} cols={1}>
+				              <Card>
+								        <CardMedia className={classes.media} image={item.avatar_url} title={item.login} />
+								        <CardContent>
+								          <Typography gutterBottom variant="headline" component="h2">
+								            {item.login}
+								          </Typography>
+								        </CardContent>
+								        <CardActions>
+								          <a size="small" target="_blank" color="primary" href={item.html_url} >GitHub</a>
+							          	<Link to={`/gitApiDetail:${item.login}`} >More...</Link>
+								        </CardActions>
+								      </Card>
+				          </GridListTile>
+							);
+						})
+					}
+	      </GridList>
+    	</div>
+		); 
 	}
-	toggleDetail(id) {
-		for (let key in this.refs) {
-			if(key === id) {
-				this.refs[key].className = (this.refs[key].className === 'hide') ? 'show' : 'hide';
-			}
-		}
-	}
+
 	render () {
 		return (
-			<ol>
-				{ this.detail() }
-			</ol>
+			<div>
+					{ this.detail() }
+			</div>
 		);
 	}
 }
 
-export default MyList;
+const MyListWithStyle = withStyles(styles)(MyList);
+export default withRouter(MyListWithStyle);
