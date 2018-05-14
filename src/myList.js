@@ -11,44 +11,44 @@ const styles = theme => ({
 		width: '100%',
 		flexGrow: 1,
 		display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
+		flexWrap: 'wrap',
+		justifyContent: 'space-around',
+		overflow: 'hidden',
+		backgroundColor: theme.palette.background.paper,
 	},
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  }
+	media: {
+		height: 0,
+		paddingTop: '56.25%', // 16:9
+	}
 });
 class MyList extends React.Component {
 	detail() {
 		const {classes} = this.props;
 		return(
 			<div className={classes.root}>
-	      <GridList cellHeight={300} className={classes.gridList} cols={4}>
+				<GridList cellHeight={300} className={classes.gridList} cols={4}>
 					{
 						this.props.data.map((item, index) => {
 							 return (
 								<GridListTile key={item.id} cols={1}>
-				              <Card>
-								        <CardMedia className={classes.media} image={item.avatar_url} title={item.login} />
-								        <CardContent>
-								          <Typography gutterBottom variant="headline" component="h2">
-								            {item.login}
-								          </Typography>
-								        </CardContent>
-								        <CardActions>
-								          <a size="small" target="_blank" color="primary" href={item.html_url} >GitHub</a>
-							          	<Link to={`/gitApiDetail:${item.login}`} >More...</Link>
-								        </CardActions>
-								      </Card>
-				          </GridListTile>
+									<Card>
+										<CardMedia className={classes.media} image={item.avatar_url} title={item.login} />
+										<CardContent>
+											<Typography gutterBottom variant="headline" component="h2">
+												{item.login}
+											</Typography>
+										</CardContent>
+										<CardActions>
+											<a size="small" target="_blank" color="primary" href={item.html_url} >GitHub</a>
+											<Link to={`/gitApiDetail:${item.login}`} >More...</Link>
+										</CardActions>
+									</Card>
+								</GridListTile>
 							);
 						})
 					}
-	      </GridList>
-    	</div>
+				</GridList>
+			</div>
 		); 
 	}
 
