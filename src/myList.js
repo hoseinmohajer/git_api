@@ -19,9 +19,15 @@ const styles = theme => ({
 	media: {
 		height: 0,
 		paddingTop: '56.25%', // 16:9
+	},
+	link: {
+		textDecoration: 'none'
 	}
 });
 class MyList extends React.Component {
+	componentDidMount() {
+		return "hello";
+	}
 	detail() {
 		const {classes} = this.props;
 		return(
@@ -39,8 +45,8 @@ class MyList extends React.Component {
 											</Typography>
 										</CardContent>
 										<CardActions>
-											<a size="small" target="_blank" color="primary" href={item.html_url} >GitHub</a>
-											<Link to={`/gitApiDetail:${item.login}`} >More...</Link>
+											<Link className={classes.link} target="_blank" to={item.html_url}>GitHub</Link>
+											<Link className={classes.link} to={`/gitApiDetail/${item.login}`} >More...</Link>
 										</CardActions>
 									</Card>
 								</GridListTile>

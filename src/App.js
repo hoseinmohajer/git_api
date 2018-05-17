@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import './App.css';
 import MyList from './myList';
 
+import { Link, Switch, Route, withRouter } from "react-router-dom";
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import IconButton from 'material-ui/IconButton';
+// import IconButton from 'material-ui/IconButton';
+// import MenuIcon from '@material-ui/icons/Menu';
 import TextField from 'material-ui/TextField';
-import MenuIcon from '@material-ui/icons/Menu';
+import GitApiDetail from './components/gitApiDetail';
 
 const styles = theme => ({
   root: {
@@ -35,6 +37,10 @@ const styles = theme => ({
   },
   menu: {
     width: 200,
+  },
+  button: {
+    color: '#fff',
+    textDecoration: 'none'
   },
 });
 
@@ -99,17 +105,16 @@ class App extends Component {
 		}
 	}
 	render() {
-		// deconstruct
 		const {classes} = this.props;
 		return (
 			<div className={classes.root} ref="iScroll">
 				<AppBar position="static">
 					<Toolbar>
-						<IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+						{/*<IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
 							<MenuIcon />
-						</IconButton>
+						</IconButton>*/}
 						<Typography variant="title" color="inherit" className={classes.flex}>
-							Git API
+							<Link to='/' className={classes.button} >Home</Link>
 						</Typography>
 						<form className={classes.container} noValidate autoComplete="off">
 							<TextField
@@ -122,12 +127,19 @@ class App extends Component {
 						</form>  
 					</Toolbar>
 				</AppBar>
-					<MyList data={this.state.data} />
-					{ (this.state.loadingState) ? <div id="loadingContainer" ref="loadingContainer">Loading...</div> : '' }
+				<Switch>
+					<Route exact path='/' >
+						<div>
+							<MyList data={this.state.data} />
+							{ (this.state.loadingState) ? <div id="loadingContainer" ref="loadingContainer">Loading...</div> : '' }
+						</div>
+					</Route>
+					<Route path='/gitApiDetail/:userLoginName' component={GitApiDetail} />
+				</Switch>
 			</div>
 		);
 	}
 }
 
 const AppWithStyles = withStyles(styles)(App);
-export default AppWithStyles;
+export default withRouter(AppWithStyles);
