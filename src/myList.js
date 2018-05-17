@@ -40,7 +40,7 @@ class MyList extends React.Component {
 										</CardContent>
 										<CardActions>
 											<a size="small" target="_blank" color="primary" href={item.html_url} >GitHub</a>
-											<Link to={`/gitApiDetail:${item.login}`} >More...</Link>
+											<Link to={`/gitApiDetail/${item.login}`} >More...</Link>
 										</CardActions>
 									</Card>
 								</GridListTile>
