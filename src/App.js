@@ -95,8 +95,8 @@ class App extends Component {
 				sortMsg: 'You have to fill the textbox!'
 			});
 		} else {
-			const filteredArray = this.state.data.filter((item, index) => (
-				(item.login.substring(0,1) === value)
+			const filteredArray = this.state.origData.filter((item, index) => (
+				(item.login.substring(0,value.length) === value)
 			));
 			this.setState({
 				data: (filteredArray.length === 0) ? this.state.origData : filteredArray,

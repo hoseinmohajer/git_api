@@ -25,9 +25,6 @@ const styles = theme => ({
 	}
 });
 class MyList extends React.Component {
-	componentDidMount() {
-		return "hello";
-	}
 	detail() {
 		const {classes} = this.props;
 		return(
